@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState , useEffect} from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import Tambah from "./TambahGuru";
+import Tambah from "./TambahKeluarga";
 
-function DataGuru() {
+function DataKeluarga() {
   const navigate = useNavigate();
   const [showTambah, setShowTambah] = useState(false);
 
   useEffect(() => {
     if (showTambah === true) {
-      navigate("/data-guru/tambah-guru");
+      navigate("/data-keluarga/tambah-keluarga");
     } else {
       navigate("../");
     }
@@ -19,11 +19,11 @@ function DataGuru() {
   };
 
   return (
-    <div className="w-full h-auto">
+    <div className="w-full h-full">
       {showTambah == false ? (
         <>
-          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Guru</h1>
-          <div className="mt-8 h-full bg-white">
+          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Keluarga Siswa</h1>
+          <div className="mt-8 h-fit bg-white">
             <div className="pt-6 ml-8">
               <div className="flex w-1/2 gap-x-5 text-white font-bold">
                 <button
@@ -45,10 +45,10 @@ function DataGuru() {
         </>
       ) : null}
       <Routes>
-        <Route path="/data-guru/tambah-guru" element={<Tambah />} />
+        <Route path="/data-keluarga/tambah-keluarga" element={<Tambah />} />
       </Routes>
     </div>
   );
 }
 
-export default DataGuru;
+export default DataKeluarga;

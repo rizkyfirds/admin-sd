@@ -18,46 +18,26 @@ function Tambah() {
     <div className="w-full h-full">
       <div className="flex">
         <button>
-          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Siswa /</h1>
+          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Guru /</h1>
         </button>
         <h1 className="text-4xl font-['Segoe UI'] pl-2">Tambah</h1>
       </div>
-      <div className="mt-8 h-fit bg-white">
+      <div className="mt-8 h-full bg-white">
         <div className="flex pt-6 ml-8">
           <div className="font-bold mx-auto text-xl">
-            Form Tambah Data Siswa
+            Form Tambah Data Guru
           </div>
         </div>
         <div className="w-full px-20 pt-8">
           <InputField
             Value={"Nama :"}
-            Placeholder={"isi nama siswa"}
+            Placeholder={"isi nama guru"}
             changeHandler={(e) => setNama(e.target.value)}
           />
           <InputField
-            Value={"NIS :"}
-            Placeholder={"isi NIS siswa"}
-            changeHandler={(e) => setNIS(e.target.value)}
-          />
-          <InputField
-            Value={"NKK :"}
-            Placeholder={"isi NKK siswa"}
-            changeHandler={(e) => setNKK(e.target.value)}
-          />
-          <InputField
-            Value={"Tahun Masuk :"}
-            Placeholder={"isi tahun masuk"}
-            changeHandler={(e) => setTahunMasuk(e.target.value)}
-          />
-          <InputField
-            Value={"Alamat :"}
-            Placeholder={"isi alamat siswa"}
-            changeHandler={(e) => setAlamat(e.target.value)}
-          />
-          <InputField
             Value={"NIK :"}
-            Placeholder={"isi NIK masuk"}
-            changeHandler={(e) => setNIK(e.target.value)}
+            Placeholder={"isi NIK guru"}
+            changeHandler={(e) => setNIS(e.target.value)}
           />
           <div className="grid grid-flow-col justify-stretch">
             <InputField
@@ -74,10 +54,48 @@ function Tambah() {
             </div>
           </div>
           <InputField
-            Value={"SD Sebelum :"}
-            Placeholder={"isi SD sebelumnya"}
-            changeHandler={(e) => setSdSebelum(e.target.value)}
+            Value={"Alamat :"}
+            Placeholder={"isi alamat guru"}
+            changeHandler={(e) => setAlamat(e.target.value)}
           />
+          <InputField
+            Value={"Lulusan :"}
+            Placeholder={"pilih lulusan"}
+            changeHandler={(e) => setNKK(e.target.value)}
+          />
+          <InputField
+            Value={"Perguruan Tinggi :"}
+            Placeholder={"isi nama perguruan tinggi"}
+            changeHandler={(e) => setTahunMasuk(e.target.value)}
+          />
+          <div className="grid grid-flow-col justify-stretch">
+            <InputField
+              Value={"Sertifikat Diperoleh :"}
+              Placeholder={"isi sertifikat apa saja yang diperoleh guru"}
+              changeHandler={(e) => setTempatLahir(e.target.value)}
+            />
+            <div className="ml-3">
+              <InputField
+                Value={"Foto :"}
+                Placeholder={"import foto guru"}
+                changeHandler={(e) => setTempatLahir(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="grid grid-flow-col justify-stretch">
+            <InputField
+              Value={"File Ijazah :"}
+              Placeholder={"import file ijazah"}
+              changeHandler={(e) => setTempatLahir(e.target.value)}
+            />
+            <div className="pl-3">
+              <InputField
+                Value={"Import File KTP :"}
+                Placeholder={"import file KTP"}
+                changeHandler={(e) => setTempatLahir(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
         <div className="mt-10 pb-10">
           <div className="flex justify-center gap-x-5">

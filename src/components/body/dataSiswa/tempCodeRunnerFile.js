@@ -1,10 +1,9 @@
 // Tambah.js
 import React, { useState } from "react";
 import InputField from "../../inputField/InputField";
-import Button from "../../button/Button";
 
 function Tambah() {
-  console.log("tambah");
+  console.log("tambah")
   const [nama, setNama] = useState("");
   const [nis, setNIS] = useState("");
   const [nkk, setNKK] = useState("");
@@ -22,13 +21,13 @@ function Tambah() {
         </button>
         <h1 className="text-4xl font-['Segoe UI'] pl-2">Tambah</h1>
       </div>
-      <div className="mt-8 h-fit bg-white">
+      <div className="mt-8 h-full bg-white">
         <div className="flex pt-6 ml-8">
           <div className="font-bold mx-auto text-xl">
             Form Tambah Data Siswa
           </div>
         </div>
-        <div className="w-full px-20 pt-8">
+        <div className="container px-20 pt-10 h-full">
           <InputField
             Value={"Nama :"}
             Placeholder={"isi nama siswa"}
@@ -59,31 +58,16 @@ function Tambah() {
             Placeholder={"isi NIK masuk"}
             changeHandler={(e) => setNIK(e.target.value)}
           />
-          <div className="grid grid-flow-col justify-stretch">
-            <InputField
-              Value={"Tempat Lahir :"}
-              Placeholder={"isi tempat lahir masuk"}
-              changeHandler={(e) => setTempatLahir(e.target.value)}
-            />
-            <div className="ml-3">
-              <InputField
-                Value={"Tanggal Lahir :"}
-                Placeholder={"isi tanggal lahir masuk"}
-                changeHandler={(e) => setTempatLahir(e.target.value)}
-              />
-            </div>
-          </div>
+          <InputField
+            Value={"Tempat Lahir :"}
+            Placeholder={"isi tempat lahir masuk"}
+            changeHandler={(e) => setTempatLahir(e.target.value)}
+          />
           <InputField
             Value={"SD Sebelum :"}
             Placeholder={"isi SD sebelumnya"}
             changeHandler={(e) => setSdSebelum(e.target.value)}
           />
-        </div>
-        <div className="mt-10 pb-10">
-          <div className="flex justify-center gap-x-5">
-            <Button color={"#03045E"} text={"Simpan"}/>
-            <Button color={"#7E0303"} text={"Batalkan"}/>
-          </div>
         </div>
       </div>
     </div>
