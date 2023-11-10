@@ -1,9 +1,11 @@
 // Tambah.js
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import InputField from "../../inputField/InputField";
 import Button from "../../button/Button";
 
-function Tambah() {
+function Tambah({ setShowTambah }) {
+  const navigate = useNavigate();
   const [nama, setNama] = useState("");
   const [nis, setNIS] = useState("");
   const [nkk, setNKK] = useState("");
@@ -13,11 +15,15 @@ function Tambah() {
   const [tempatLahir, setTempatLahir] = useState("");
   const [sdSebelum, setSdSebelum] = useState("");
 
+  const renderBack = () => {
+    setShowTambah(false)
+    navigate("/data-role")
+  }
   return (
     <div className="w-full h-full">
       <div className="flex">
         <button>
-          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Role User /</h1>
+          <h1 className="font-bold text-4xl font-['Segoe UI']" onClick={renderBack}>Data Role User /</h1>
         </button>
         <h1 className="text-4xl font-['Segoe UI'] pl-2">Tambah</h1>
       </div>
@@ -56,8 +62,8 @@ function Tambah() {
         </div>
         <div className="mt-10 pb-10">
           <div className="flex justify-center gap-x-5">
-            <Button color={"#03045E"} text={"Simpan"}/>
-            <Button color={"#7E0303"} text={"Batalkan"}/>
+            <Button color={"#03045E"} text={"Simpan"} />
+            <Button color={"#7E0303"} text={"Batalkan"} />
           </div>
         </div>
       </div>

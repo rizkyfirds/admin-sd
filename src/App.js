@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import Main from "./pages/Main";
 import Dashboard from "./components/body/dashboard/Dashboard";
-import Tambah from "./components/body/dataSiswa/Tambah";
+import Tambah from "./components/body/dataSiswa/TambahSiswa";
 import DataSiswa from "./components/body/dataSiswa/DataSiswa";
 
 function App() {
