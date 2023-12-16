@@ -1,10 +1,11 @@
 // Tambah.js
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import InputField from "../../inputField/InputField";
 import Button from "../../button/Button";
 
-function Tambah() {
-  console.log("tambah");
+function Tambah({setShowUbah}) {
+  const navigate = useNavigate();
   const [nama, setNama] = useState("");
   const [nis, setNIS] = useState("");
   const [nkk, setNKK] = useState("");
@@ -14,11 +15,16 @@ function Tambah() {
   const [tempatLahir, setTempatLahir] = useState("");
   const [sdSebelum, setSdSebelum] = useState("");
 
+  const renderBack = () => {
+    setShowUbah(false)
+    navigate("/profile")
+  }
+
   return (
     <div className="w-full h-full">
       <div className="flex">
         <button>
-          <h1 className="font-bold text-4xl font-['Segoe UI']">
+          <h1 className="font-bold text-4xl font-['Segoe UI']" onClick={renderBack}>
             Profile User /
           </h1>
         </button>
@@ -52,6 +58,7 @@ function Tambah() {
                 Value={"Tanggal Lahir :"}
                 Placeholder={"isi tanggal lahir masuk"}
                 changeHandler={(e) => setTempatLahir(e.target.value)}
+                tanggal = {true}
               />
             </div>
           </div>
@@ -101,8 +108,8 @@ function Tambah() {
         </div>
         <div className="mt-10 pb-10">
           <div className="flex justify-center gap-x-5">
-            <Button color={"#03045E"} text={"Simpan"} />
-            <Button color={"#7E0303"} text={"Batalkan"} />
+            <Button color={"#03045E"} text={"Simpan"} hoverBg="[#06F]"/>
+            <Button color={"#7E0303"} text={"Batalkan"} hoverBg="[#DE0404]"/>
           </div>
         </div>
       </div>

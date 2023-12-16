@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import Tambah from "./TambahGuru";
-import Ubah from "./UbahGuru";
-import SearchBar from "../search-bar/Search";
+import Tambah from "./TambahKelas";
 import Table from "../table/Table";
+import SearchBar from "../search-bar/Search";
 import Pagination from "../pagination/Pagination";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import axios from "axios";
 
-function DataGuru({
+function DataKelas({
   tableHeaders,
   totalData,
   keyValues,
@@ -21,9 +20,9 @@ function DataGuru({
   handlePageChange,
   startIndex,
   endIndex,
-  setActionType,
+  kelas,
+  setActionType
 }) {
-  console.log("tyest ", totalData);
   const navigate = useNavigate();
   const [showTambah, setShowTambah] = useState(false);
   const [showUbah, setShowUbah] = useState("-");
@@ -32,7 +31,7 @@ function DataGuru({
 
   useEffect(() => {
     if (showTambah === true) {
-      navigate("/data-guru/tambah-guru");
+      navigate("/data-kelas/tambah-kelas");
     }
     setSearchTerm("");
   }, [showTambah]);
@@ -42,55 +41,54 @@ function DataGuru({
   };
 
   useEffect(() => {
-    if (showUbah !== "-") {
-      // console.log("ajajaj nih ", showUbah);
-      navigate("/data-guru/ubah-guru");
+    if(DeleteID !== "-"){
+      // console.log("daaaa ", DeleteID.kelas.ID)
+      axios({
+        method: "DELETE",
+        url: `http://localhost:3000/kelas/${DeleteID.kelas.ID}`,
+      }).then((result) => {
+        // console.log(DeleteID.kelas.ID, "Delete Success", result);
+        setActionType("update kelas");
+      });
     }
-  }, [showUbah]);
-
-  useEffect(() => {
-    // console.log("ini deket ", DeleteID)
-    axios({
-      method: "DELETE",
-      url: `http://localhost:3000/guru/${DeleteID.ID}`,
-    }).then((result) => {
-      console.log("Delete Success", result);
-      setActionType("update guru");
-    });
+    setDeleteID("-")
   }, [DeleteID]);
 
   const downloadPdf = () => {
-    // Atur konfigurasi gaya untuk teks
     const styles = {
       font: "times",
       fontStyle: "normal",
-      fontSize: 8,
-    };
+      fontSize: 8
+  };
 
-    // Atur konfigurasi orientasi kertas
-    const pdfConfig = {
-      orientation: "landscape",
-    };
+  // Atur konfigurasi orientasi kertas
+  const pdfConfig = {
+      orientation: "landscape"
+  };
 
-    // Buat objek jsPDF dengan konfigurasi orientasi kertas
-    const doc = new jsPDF(pdfConfig);
+  // Buat objek jsPDF dengan konfigurasi orientasi kertas
+  const doc = new jsPDF(pdfConfig);
 
-    // Terapkan konfigurasi gaya
     doc.autoTable({
       head: [tableHeaders],
-      body: totalData.map((data) => keyValues.map((key) => data[key])),
+      body: totalData.map((data) =>
+        keyValues.map((key) =>
+          data["kelas"][key] !== undefined ? data["kelas"][key] : "-"
+        )
+      ),
       styles: styles,
       headStyles: { fillColor: "#004B23", textColor: "#ffffff" },
     });
-    doc.save("guru_table.pdf");
+
+    doc.save("kelas_table.pdf");
   };
 
   return (
     <div className="w-full h-full">
-      {showTambah == false && showUbah == "-" ? (
+      {showTambah == false ? (
         <>
-          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Guru</h1>
-          <div className="my-8 h-fit bg-white">
+          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Kelas</h1>
+          <div className="mt-8 h-fit bg-white">
             <div className="py-6 ml-8">
               <div className="flex w-1/2 gap-x-5 text-white font-bold">
                 <button
@@ -110,16 +108,20 @@ function DataGuru({
             </div>
             <div className="px-8 pb-8">
               {/*Total entries and Search Bar*/}
-              <div className="pb-5 pt-3 flex justify-between">
-                <span>
-                  Show{" "}
-                  <span className="bg-[#D9D9D9] p-1 mx-1 font-bold">
-                    {totalData.length}
-                  </span>{" "}
-                  Entries
-                </span>
-                <SearchBar onSearch={handleSearch} />
-              </div>
+              {totalData.length !== null ? (
+                <div className="pb-5 pt-3 flex justify-between">
+                  <span>
+                    Show{" "}
+                    <span className="bg-[#D9D9D9] p-1 mx-1 font-bold">
+                      {totalData.length}
+                    </span>{" "}
+                    Entries
+                  </span>
+                  <SearchBar onSearch={handleSearch} />
+                </div>
+              ) : (
+                <div></div>
+              )}
               {/*Table*/}
               <div className="pb-5" ref={tableRef}>
                 <Table
@@ -129,11 +131,12 @@ function DataGuru({
                   startIndex={startIndex}
                   itemsPerPage={itemsPerPage}
                   searchTerm={searchTerm}
+                  kelas={true}
                   setUbah={setShowUbah}
                   setDeleteID={setDeleteID}
                 />
               </div>
-              {/*Data entry in current page and pagination*/}
+              {/*Data entry in the current page and pagination*/}
               {searchTerm.length === 0 && (
                 <div className="flex justify-between">
                   <span>
@@ -153,28 +156,12 @@ function DataGuru({
       ) : null}
       <Routes>
         <Route
-          path="/data-guru/tambah-guru"
-          element={
-            <Tambah
-              setShowTambah={setShowTambah}
-              setActionType={setActionType}
-              data={totalData}
-            />
-          }
-        />
-        <Route
-          path="/data-guru/ubah-guru"
-          element={
-            <Ubah
-              setShowUbah={setShowUbah}
-              setActionType={setActionType}
-              data={showUbah}
-            />
-          }
+          path="/data-kelas/tambah-kelas"
+          element={<Tambah setShowTambah={setShowTambah} setActionType={setActionType}/>}
         />
       </Routes>
     </div>
   );
 }
 
-export default DataGuru;
+export default DataKelas;

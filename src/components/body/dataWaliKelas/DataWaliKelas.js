@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import Tambah from "./TambahGuru";
-import Ubah from "./UbahGuru";
-import SearchBar from "../search-bar/Search";
+import Tambah from "./TambahWaliKelas";
 import Table from "../table/Table";
+import SearchBar from "../search-bar/Search";
 import Pagination from "../pagination/Pagination";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import axios from "axios";
 
-function DataGuru({
+function DataWaliKelas({
+  dataKelas,
+  dataGuru,
   tableHeaders,
   totalData,
   keyValues,
@@ -21,18 +21,26 @@ function DataGuru({
   handlePageChange,
   startIndex,
   endIndex,
-  setActionType,
+  walikelas,
+  setTotalData,
+  handleSearch2,
+  searchTerm2,
+  currentPage2,
+  itemsPerPage2,
+  handlePageChange2,
+  startIndex2,
+  endIndex2,
+  tableHeadersSiswa,
+  totalDataSiswa,
+  keyValuesSiswa
 }) {
-  console.log("tyest ", totalData);
   const navigate = useNavigate();
   const [showTambah, setShowTambah] = useState(false);
-  const [showUbah, setShowUbah] = useState("-");
-  const [DeleteID, setDeleteID] = useState("-");
   const tableRef = useRef(null);
 
   useEffect(() => {
     if (showTambah === true) {
-      navigate("/data-guru/tambah-guru");
+      navigate("/data-wali-kelas/tambah-wali-kelas");
     }
     setSearchTerm("");
   }, [showTambah]);
@@ -41,55 +49,70 @@ function DataGuru({
     setShowTambah(true);
   };
 
-  useEffect(() => {
-    if (showUbah !== "-") {
-      // console.log("ajajaj nih ", showUbah);
-      navigate("/data-guru/ubah-guru");
-    }
-  }, [showUbah]);
+  const fetchDataFunction = async () => {
+    // Implement your data fetching logic here
+    // For example, using fetch or axios to get data from an API
+    const response = await fetch("your_api_endpoint");
+    const data = await response.json();
+    return data;
+  };
 
-  useEffect(() => {
-    // console.log("ini deket ", DeleteID)
-    axios({
-      method: "DELETE",
-      url: `http://localhost:3000/guru/${DeleteID.ID}`,
-    }).then((result) => {
-      console.log("Delete Success", result);
-      setActionType("update guru");
-    });
-  }, [DeleteID]);
-
-  const downloadPdf = () => {
-    // Atur konfigurasi gaya untuk teks
+  const downloadPdf = async () => {
+    const pdfConfig = {
+      orientation: "landscape"
+    };
+    const doc = new jsPDF(pdfConfig);
     const styles = {
       font: "times",
       fontStyle: "normal",
-      fontSize: 8,
-    };
+      fontSize: 8
+  };
 
-    // Atur konfigurasi orientasi kertas
-    const pdfConfig = {
-      orientation: "landscape",
-    };
+    // Fetch data if not available
+    if (!totalData.length) {
+      try {
+        const fetchedData = await fetchDataFunction();
+        // Update the state or use another mechanism to set the fetched data
+        setTotalData(fetchedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        return;
+      }
+    }
 
-    // Buat objek jsPDF dengan konfigurasi orientasi kertas
-    const doc = new jsPDF(pdfConfig);
+    const tableData = totalData.map((row) =>
+      keyValues.map((value) => {
+        let cellData = "-"; // Default value if the data is not available
 
-    // Terapkan konfigurasi gaya
+        // Handle nested data structure
+        if (value === "nama" || value === "Alamat") {
+          cellData =
+            row["kelas"]["walikelas"] && row["kelas"]["walikelas"][value]
+              ? row["kelas"]["walikelas"][value]
+              : "-";
+        } else {
+          cellData = row["kelas"] && row["kelas"][value] ? row["kelas"][value] : "-";
+        }
+
+        return cellData;
+      })
+    );
+
     doc.autoTable({
-      head: [tableHeaders],
-      body: totalData.map((data) => keyValues.map((key) => data[key])),
+      head: [keyValues],
+      body: tableData,
       styles: styles,
       headStyles: { fillColor: "#004B23", textColor: "#ffffff" },
     });
-    doc.save("guru_table.pdf");
+
+    doc.save("walikelas_table.pdf");
   };
 
   return (
     <div className="w-full h-full">
-      {showTambah == false && showUbah == "-" ? (
+      {showTambah == false ? (
         <>
-          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Guru</h1>
+          <h1 className="font-bold text-4xl font-['Segoe UI']">Data Wali Kelas</h1>
           <div className="my-8 h-fit bg-white">
             <div className="py-6 ml-8">
               <div className="flex w-1/2 gap-x-5 text-white font-bold">
@@ -129,8 +152,7 @@ function DataGuru({
                   startIndex={startIndex}
                   itemsPerPage={itemsPerPage}
                   searchTerm={searchTerm}
-                  setUbah={setShowUbah}
-                  setDeleteID={setDeleteID}
+                  walikelas={walikelas}
                 />
               </div>
               {/*Data entry in current page and pagination*/}
@@ -153,28 +175,33 @@ function DataGuru({
       ) : null}
       <Routes>
         <Route
-          path="/data-guru/tambah-guru"
-          element={
-            <Tambah
-              setShowTambah={setShowTambah}
-              setActionType={setActionType}
-              data={totalData}
-            />
-          }
-        />
-        <Route
-          path="/data-guru/ubah-guru"
-          element={
-            <Ubah
-              setShowUbah={setShowUbah}
-              setActionType={setActionType}
-              data={showUbah}
-            />
-          }
+          path="/data-wali-kelas/tambah-wali-kelas"
+          element={<Tambah 
+          dataKelas={dataKelas}
+          dataGuru={dataGuru}
+          setShowTambah={setShowTambah} 
+          tableHeaders={tableHeadersSiswa}
+          totalData={totalDataSiswa}
+          keyValues={keyValuesSiswa}
+          handleSearch={handleSearch}
+          searchTerm={searchTerm}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          handlePageChange={handlePageChange}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          handleSearch2={handleSearch2}
+          searchTerm2={searchTerm2}
+          currentPage2={currentPage2}
+          itemsPerPage2={itemsPerPage2}
+          handlePageChange2={handlePageChange2}
+          startIndex2={startIndex2}
+          endIndex2={endIndex2}
+          />}
         />
       </Routes>
     </div>
   );
 }
 
-export default DataGuru;
+export default DataWaliKelas;

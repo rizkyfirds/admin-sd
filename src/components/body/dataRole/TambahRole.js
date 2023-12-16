@@ -27,7 +27,7 @@ function Tambah({ setShowTambah }) {
         </button>
         <h1 className="text-4xl font-['Segoe UI'] pl-2">Tambah</h1>
       </div>
-      <div className="mt-8 h-fit bg-white">
+      <div className="my-8 h-fit bg-white">
         <div className="flex pt-6 ml-8">
           <div className="font-bold mx-auto text-xl">
             Form Tambah Data Keluarga
@@ -35,35 +35,37 @@ function Tambah({ setShowTambah }) {
         </div>
         <div className="w-full px-20 pt-10">
           <InputField
-            Value={"NIK :"}
+            Value={"NIK"}
             Placeholder={"pilih NIK guru"}
             changeHandler={(e) => setNama(e.target.value)}
           />
           <InputField
-            Value={"Nama :"}
+            Value={"Nama"}
             Placeholder={"auto dari BE"}
             changeHandler={(e) => setNIS(e.target.value)}
           />
           <InputField
-            Value={"Kelas :"}
+            Value={"Kelas"}
             Placeholder={"isi kelas"}
             changeHandler={(e) => setNKK(e.target.value)}
           />
           <InputField
-            Value={"Nama :"}
+            Value={"Nama"}
             Placeholder={"isi nama keluarga siswa"}
             changeHandler={(e) => setTahunMasuk(e.target.value)}
           />
           <InputField
-            Value={"Role :"}
+            Value={"Role"}
             Placeholder={"pilih role"}
             changeHandler={(e) => setAlamat(e.target.value)}
+            dropdown= {true}
+            dropdownValue={["admin", "wali kelas"]}
           />
         </div>
         <div className="mt-10 pb-10">
           <div className="flex justify-center gap-x-5">
-            <Button color={"#03045E"} text={"Simpan"} />
-            <Button color={"#7E0303"} text={"Batalkan"} />
+            <Button color={"#03045E"} text={"Simpan"} hoverBg="[#06F]"/>
+            <Button color={"#7E0303"} text={"Batalkan"} hoverBg="[#DE0404]"/>
           </div>
         </div>
       </div>

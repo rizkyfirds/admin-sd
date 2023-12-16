@@ -6,30 +6,31 @@ import Button from "../../button/Button";
 import CheckBoxInputField from "../../inputField/CheckBoxInputField";
 import axios from "axios";
 
-function Tambah({ setShowTambah, setActionType }) {
+function Ubah({ setShowUbah, setActionType, data }) {
+  console.log("datattta ", data)
   const navigate = useNavigate();
-  const [nama, setNama] = useState("");
-  const [alamat, setAlamat] = useState("");
-  const [nik, setNIK] = useState("");
-  const [tanggalLahir, setTanggalLahir] = useState("");
-  const [tempatLahir, setTempatLahir] = useState("");
-  const [lulusan, setLulusan] = useState("");
-  const [linkSertifikat, setLinkSertifikat] = useState("");
-  const [linkKK, setKK] = useState("");
-  const [linkKTP, setKTP] = useState("");
-  const [nomorKontak, setNomorKontak] = useState("");
-  const [email, setEmail] = useState("");
+  const [nama, setNama] = useState(data.nama);
+  const [alamat, setAlamat] = useState(data.Alamat);
+  const [nik, setNIK] = useState(data.ID);
+  const [tanggalLahir, setTanggalLahir] = useState(data.Tanggal_Lahir);
+  const [tempatLahir, setTempatLahir] = useState(data.Tempat_Lahir);
+  const [lulusan, setLulusan] = useState(data.lulusan);
+  const [linkSertifikat, setLinkSertifikat] = useState(data.Sertifikat);
+  const [linkKK, setKK] = useState(data.KK);
+  const [linkKTP, setKTP] = useState("-");
+  const [nomorKontak, setNomorKontak] = useState(data.Nomor_HP);
+  const [email, setEmail] = useState(data.Email);
   const [linkIjazah, setLinkIjazah] = useState("");
-  const [filePublikasi, setFilePublikasi] = useState("");
+  const [filePublikasi, setFilePublikasi] = useState(data.publikasi);
 
   // console.log("lulusan ", nama)
 
   const renderBack = () => {
-    setShowTambah(false);
+    setShowUbah("-");
     navigate("/data-guru");
   };
 
-  const handleTambahGuru = (
+  const handleUbahGuru = (
     ) => {
       const requestingData = {
         id : nik,
@@ -44,20 +45,15 @@ function Tambah({ setShowTambah, setActionType }) {
         Publikasi: filePublikasi,
         KK: linkKK,
       };
-      console.log("data masuk ",requestingData)
+      console.log(requestingData)
       axios({
-        method: "POST",
-        url: "http://localhost:3000/guru",
+        method: "PATCH",
+        url: `http://localhost:3000/guru/${data.ID}`,
         data: requestingData,
       }).then((result) => {
         console.log("hasil",result);
-        if (result.data.msg == 'Guru Created') {
-          console.log("register success");
-          setActionType("update guru")
-          renderBack();
-        } else {
-          console.log("gagal menambahkan, ada yg salah");
-        }
+        setActionType("update guru");
+        renderBack();
       });
     };
 
@@ -72,35 +68,35 @@ function Tambah({ setShowTambah, setActionType }) {
             Data Guru /
           </h1>
         </button>
-        <h1 className="text-4xl font-['Segoe UI'] pl-2">Tambah</h1>
+        <h1 className="text-4xl font-['Segoe UI'] pl-2">Ubah</h1>
       </div>
       <div className="my-8 h-fit bg-white">
         <div className="flex pt-6 ml-8">
-          <div className="font-bold mx-auto text-xl">Form Tambah Data Guru</div>
+          <div className="font-bold mx-auto text-xl">Form Ubah Data Guru</div>
         </div>
         <div className="w-full px-20 pt-8">
           <InputField
             Value={"Nama"}
-            Placeholder={"isi nama guru"}
+            Placeholder={nama}
             changeHandler={(e) => setNama(e.target.value)}
           />
           <InputField
             Value={"NIK"}
-            Placeholder={"isi NIK guru"}
+            Placeholder={nik}
             changeHandler={(e) => setNIK(e.target.value)}
           />
           <div className="flex w-full">
             <div className="w-1/2">
               <InputField
                 Value={"Tempat Lahir"}
-                Placeholder={"isi tempat lahir guru"}
+                Placeholder={tempatLahir}
                 changeHandler={(e) => setTempatLahir(e.target.value)}
               />
             </div>
             <div className="w-1/2 ml-3">
               <InputField
                 Value={"Tanggal Lahir"}
-                Placeholder={"isi tanggal lahir guru"}
+                Placeholder={tanggalLahir}
                 changeHandler={(e) => setTanggalLahir(e.target.value)}
                 tanggal={true}
               />
@@ -109,42 +105,42 @@ function Tambah({ setShowTambah, setActionType }) {
           <div className="grid grid-flow-col justify-stretch">
             <InputField
               Value={"Nomor Kontak"}
-              Placeholder={"nomor kontak guru"}
+              Placeholder={nomorKontak}
               changeHandler={(e) => setNomorKontak(e.target.value)}
             />
             <div className="pl-3">
               <InputField
                 Value={"Email"}
-                Placeholder={"email guru"}
+                Placeholder={email}
                 changeHandler={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
           <InputField
             Value={"Alamat"}
-            Placeholder={"isi alamat guru"}
+            Placeholder={alamat}
             changeHandler={(e) => setAlamat(e.target.value)}
           />
           <CheckBoxInputField
             Value={"Lulusan"}
-            changeHandler={setLulusan} // lulusan belum masuk
+            changeHandler={setLulusan}
             ManyValue={["S1", "S2", "S3"]}
           />
           <InputField
             Value={"File Publikasi"}
-            Placeholder={"isi link file publikasi"}
+            Placeholder={filePublikasi}
             changeHandler={(e) => setFilePublikasi(e.target.value)}
           />
           <div className="grid grid-flow-col justify-stretch">
             <InputField
               Value={"File Sertifikat"}
-              Placeholder={"isi link sertifikat guru"}
+              Placeholder={linkSertifikat}
               changeHandler={(e) => setLinkSertifikat(e.target.value)}
             />
             <div className="ml-3">
               <InputField
                 Value={"Link KK"}
-                Placeholder={"File KK guru"}
+                Placeholder={linkKK}
                 changeHandler={(e) => setKK(e.target.value)}
               />
             </div>
@@ -152,13 +148,13 @@ function Tambah({ setShowTambah, setActionType }) {
           <div className="grid grid-flow-col justify-stretch">
             <InputField
               Value={"File Ijazah"}
-              Placeholder={"link file ijazah guru"}
+              Placeholder={linkIjazah}
               changeHandler={(e) => setLinkIjazah(e.target.value)}
             />
             <div className="pl-3">
               <InputField
                 Value={"File KTP"}
-                Placeholder={"link file KTP guru"}
+                Placeholder={linkKTP}
                 changeHandler={(e) => setKTP(e.target.value)}
               />
             </div>
@@ -166,7 +162,7 @@ function Tambah({ setShowTambah, setActionType }) {
         </div>
         <div className="mt-10 pb-10">
           <div className="flex justify-center gap-x-5">
-          <button className="w-32 h-10 bg-[#03045E] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#06F]" onClick={handleTambahGuru}>Simpan</button>
+          <button className="w-32 h-10 bg-[#03045E] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#06F]" onClick={handleUbahGuru}>Simpan</button>
             {/* <Button color={"#03045E"} text={"Simpan"} hoverBg="[#06F]" /> */}
             <Button color={"#7E0303"} text={"Batalkan"} hoverBg="[#DE0404]" />
           </div>
@@ -176,4 +172,4 @@ function Tambah({ setShowTambah, setActionType }) {
   );
 }
 
-export default Tambah;
+export default Ubah;

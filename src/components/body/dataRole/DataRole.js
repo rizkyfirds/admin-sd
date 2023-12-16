@@ -5,7 +5,7 @@ import Table from "../table/Table";
 import SearchBar from "../search-bar/Search";
 import Pagination from "../pagination/Pagination";
 
-function DataRole({ tableHeaders, totalData, handleSearch, searchTerm, setSearchTerm, currentPage, itemsPerPage, handlePageChange, startIndex, endIndex }) {
+function DataRole({ tableHeaders, totalData,keyValues, handleSearch, searchTerm, setSearchTerm, currentPage, itemsPerPage, handlePageChange, startIndex, endIndex }) {
   const navigate = useNavigate();
   const [showTambah, setShowTambah] = useState(false);
 
@@ -25,17 +25,17 @@ function DataRole({ tableHeaders, totalData, handleSearch, searchTerm, setSearch
       {showTambah == false ? (
         <>
           <h1 className="font-bold text-4xl font-['Segoe UI']">Data Role</h1>
-          <div className="mt-8 h-fit bg-white">
+          <div className="my-8 h-fit bg-white">
             <div className="py-6 ml-8">
               <div className="flex w-1/2 gap-x-5 text-white font-bold">
                 <button
-                  className="px-12 py-2.5 bg-[#03045E]"
+                  className="px-12 py-2.5 bg-[#03045E] hover:bg-[#0066FF]"
                   onClick={renderTambah}
                 >
                   Tambah
                 </button>
-                <button className="px-6 py-2.5 bg-[#805B10]">Import Data</button>
-                <button className="px-10 py-2.5 bg-[#004B23]">Download Data</button>
+                <button className="px-6 py-2.5 bg-[#805B10] hover:bg-[#FFB703]">Import Data</button>
+                <button className="px-10 py-2.5 bg-[#004B23] hover:bg-[#299948]">Download Data</button>
               </div>
               <div className="w-1/2"></div>
             </div>
@@ -54,6 +54,7 @@ function DataRole({ tableHeaders, totalData, handleSearch, searchTerm, setSearch
                 <Table
                   headers={tableHeaders}
                   data={totalData}
+                  keyValues = {keyValues}
                   startIndex={startIndex}
                   itemsPerPage={itemsPerPage}
                   searchTerm={searchTerm}

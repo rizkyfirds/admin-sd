@@ -3,22 +3,33 @@ import { RiDashboardLine } from "react-icons/ri";
 import { HiUserGroup } from "react-icons/hi2";
 import { FaUserTie, FaUserCircle, FaUserCog } from "react-icons/fa";
 import { MdFamilyRestroom } from "react-icons/md";
+import { GiTeacher } from "react-icons/gi";
+import { PiCertificateBold } from "react-icons/pi";
+import { BiSolidInjection } from "react-icons/bi";
+import axios from "axios";
 
-function SideBar({ showMenu, setShowMenu }) {
+function SideBar({ showMenu, setShowMenu,setLoginStatus }) {
+  const handleLogout = () => {
+      axios({
+        method: "GET",
+        url: "http://localhost:3000/auth/logout",
+      }).then((result) => {
+        console.log("hasil", result);
+        if (result.data.Status === "Success Logout") {
+          setLoginStatus(false);
+        }
+      }); 
+  };
   return (
-    <div className="sticky top-0 h-screen bg-[#004B23]">
+    <div className="sticky top-0 min-h-screen max-h-full bg-[#004B23]">
       <div className="px-4 h-full">
-        <div className="h-1/2">
-          <div className="h-1/3">
-            <div className="flex h-1/2 border-b-2">
-              <div className="flex h-full ">
+              <div className="flex py-3.5 border-b-2">
                 <p className="m-auto font-bold text-center text-xl font-['Segoe UI'] text-white h-fit">
                   SD Islam Terpadu Inspiratif
                 </p>
               </div>
-            </div>
-            <div className="flex h-1/2 border-b-2">
-              <div className="flex h-full ">
+            <div className="flex py-3.5 border-b-2">
+              <div className="w-full m-auto hover:bg-[#299948]">
                 <button
                   className="flex"
                   onClick={() => setShowMenu("Dashboard")}
@@ -34,10 +45,9 @@ function SideBar({ showMenu, setShowMenu }) {
                 </button>
               </div>
             </div>
-          </div>
-          <div className="flex h-1/3 border-b-2">
-            <div className="grid place-content-center gap-y-4">
-              <div className="">
+          <div className="flex py-3.5 border-b-2">
+            <div className="w-full grid place-self-center gap-y-4">
+              <div className="w-full m-auto hover:bg-[#299948]">
                 <button className="" onClick={() => setShowMenu("Data Siswa")}>
                   <div className="flex">
                     <HiUserGroup className="text-white text-xl mr-2 my-auto" />
@@ -51,7 +61,7 @@ function SideBar({ showMenu, setShowMenu }) {
                   </div>
                 </button>
               </div>
-              <div className="">
+              <div className="hover:bg-[#299948]">
                 <button className="" onClick={() => setShowMenu("Data Guru")}>
                   <div className="flex">
                     <FaUserTie className="text-white text-xl mr-2 my-auto" />
@@ -65,7 +75,7 @@ function SideBar({ showMenu, setShowMenu }) {
                   </div>
                 </button>
               </div>
-              <div className="">
+              <div className="hover:bg-[#299948]">
                 <button
                   className=""
                   onClick={() => setShowMenu("Data Keluarga Siswa")}
@@ -84,12 +94,106 @@ function SideBar({ showMenu, setShowMenu }) {
                   </div>
                 </button>
               </div>
+              <div className="hover:bg-[#299948]">
+                <button
+                  className=""
+                  onClick={() => setShowMenu("Data Kelas")}
+                >
+                  <div className="flex">
+                    <GiTeacher className="text-white text-xl mr-2 my-auto" />
+                    <p
+                      className={`my-auto text-left ${
+                        showMenu === "Data Kelas"
+                          ? "font-bold "
+                          : "font-normal"
+                      } text-lg font-['Segoe UI'] text-white`}
+                    >
+                      Data Kelas
+                    </p>
+                  </div>
+                </button>
+              </div>
+              <div className="hover:bg-[#299948]">
+                <button
+                  className=""
+                  onClick={() => setShowMenu("Data Wali Kelas")}
+                >
+                  <div className="flex">
+                    <FaUserTie className="text-white text-xl mr-2 my-auto" />
+                    <p
+                      className={`my-auto text-left ${
+                        showMenu === "Data Wali Kelas"
+                          ? "font-bold "
+                          : "font-normal"
+                      } text-lg font-['Segoe UI'] text-white`}
+                    >
+                      Data Wali Kelas
+                    </p>
+                  </div>
+                </button>
+              </div>
+              <div className="hover:bg-[#299948]">
+                <button
+                  className=""
+                  onClick={() => setShowMenu("Lomba Internal")}
+                >
+                  <div className="flex">
+                    <PiCertificateBold className="text-white text-xl mr-2 my-auto" />
+                    <p
+                      className={`my-auto text-left ${
+                        showMenu === "Lomba Internal"
+                          ? "font-bold "
+                          : "font-normal"
+                      } text-lg font-['Segoe UI'] text-white`}
+                    >
+                      Lomba Internal
+                    </p>
+                  </div>
+                </button>
+              </div>
+              <div className="hover:bg-[#299948]">
+                <button
+                  className=""
+                  onClick={() => setShowMenu("Lomba External")}
+                >
+                  <div className="flex">
+                    <PiCertificateBold className="text-white text-xl mr-2 my-auto" />
+                    <p
+                      className={`my-auto text-left ${
+                        showMenu === "Lomba External"
+                          ? "font-bold "
+                          : "font-normal"
+                      } text-lg font-['Segoe UI'] text-white`}
+                    >
+                      Lomba External
+                    </p>
+                  </div>
+                </button>
+              </div>
+              <div className="hover:bg-[#299948]">
+                <button
+                  className=""
+                  onClick={() => setShowMenu("Imunisasi")}
+                >
+                  <div className="flex">
+                    <BiSolidInjection className="text-white text-xl mr-2 my-auto" />
+                    <p
+                      className={`my-auto text-left ${
+                        showMenu === "Imunisasi"
+                          ? "font-bold "
+                          : "font-normal"
+                      } text-lg font-['Segoe UI'] text-white`}
+                    >
+                      Imunisasi
+                    </p>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
-          <div className="flex h-1/3">
-            <div className="flex h-1/2 w-full border-b-2">
-              <div className="h-full grid place-content-center gap-y-4">
-                <div className="">
+            {/* <div className="flex py-3.5 w-full border-b-2">
+              <div className="w-full grid place-self-center gap-y-4">
+                <div className="hover:bg-[#299948]">
                   <button
                     className="w-full"
                     onClick={() => setShowMenu("Role")}
@@ -106,7 +210,7 @@ function SideBar({ showMenu, setShowMenu }) {
                     </div>
                   </button>
                 </div>
-                <div className="">
+                <div className="hover:bg-[#299948]">
                   <button
                     className="w-full"
                     onClick={() => setShowMenu("Profile")}
@@ -124,19 +228,14 @@ function SideBar({ showMenu, setShowMenu }) {
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="h-1/2">
-          <div className="flex h-2/6">
+            </div> */}
+          <div className="flex py-9">
             <div className="flex w-full h-1/4 px-5">
-              <button className="w-full bg-[#ADB5BD] text-[#7E0303] text-xl font-['Segoe UI'] font-bold">
+              <button onClick={handleLogout} className="w-full bg-[#ADB5BD] text-[#7E0303] text-xl font-['Segoe UI'] font-bold hover:bg-[#FFFFFF] hover:text-[#FF0404]">
                 KELUAR
               </button>
             </div>
           </div>
-          <div className="4/6"></div>
-        </div>
       </div>
     </div>
   );

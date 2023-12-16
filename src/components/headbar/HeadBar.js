@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../../assets/logoSD.svg";
 function HeadBar() {
-  const userName = "User-Name";
+  const userName = "Admin";
   return (
     <div className="w-full h-full">
       <div className="flex h-full justify-end my-auto">
