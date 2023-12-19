@@ -29,33 +29,33 @@ function Ubah({ setShowUbah, setActionType, data }) {
     navigate("/data-guru");
   };
 
-  const handleUbahGuru = (
-    ) => {
-      const requestingData = {
-        id : nik,
-        nama: nama,
-        Email: email,
-        Nomor_HP: nomorKontak,
-        Tempat_Lahir: tempatLahir,
-        Tanggal_Lahir: tanggalLahir,
-        Alamat: alamat,
-        Lulusan: lulusan,
-        Sertifikat: linkSertifikat,
-        Publikasi: filePublikasi,
-        KK: linkKK,
-        KTP: linkKTP
-      };
-      console.log(requestingData)
-      axios({
-        method: "PATCH",
-        url: `http://localhost:3000/guru/${data.ID}`,
-        data: requestingData,
-      }).then((result) => {
-        console.log("hasil",result);
-        setActionType("update guru");
-        renderBack();
-      });
+  const handleUbahGuru = () => {
+    const requestingData = {
+      id: nik,
+      nama: nama,
+      Email: email,
+      Nomor_HP: nomorKontak,
+      Tempat_Lahir: tempatLahir,
+      Tanggal_Lahir: tanggalLahir,
+      Alamat: alamat,
+      Lulusan: lulusan,
+      Sertifikat: linkSertifikat,
+      Publikasi: filePublikasi,
+      KK: linkKK,
+      KTP: linkKTP,
+      ijazah: linkIjazah
     };
+    // console.log(requestingData);
+    axios({
+      method: "PATCH",
+      url: `http://localhost:3000/guru/${data.ID}`,
+      data: requestingData,
+    }).then((result) => {
+      console.log("hasil", result);
+      setActionType("update guru");
+      renderBack();
+    });
+  };
 
   return (
     <div className="w-full h-full">
@@ -162,9 +162,18 @@ function Ubah({ setShowUbah, setActionType, data }) {
         </div>
         <div className="mt-10 pb-10">
           <div className="flex justify-center gap-x-5">
-          <button className="w-32 h-10 bg-[#03045E] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#06F]" onClick={handleUbahGuru}>Simpan</button>
-            {/* <Button color={"#03045E"} text={"Simpan"} hoverBg="[#06F]" /> */}
-            <Button color={"#7E0303"} text={"Batalkan"} hoverBg="[#DE0404]" />
+            <button
+              className="w-32 h-10 bg-[#03045E] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#06F]"
+              onClick={handleUbahGuru}
+            >
+              Simpan
+            </button>
+            <button
+              className="w-32 h-10 bg-[#7E0303] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#DE0404]"
+              onClick={renderBack}
+            >
+              Batalkan
+            </button>
           </div>
         </div>
       </div>

@@ -37,6 +37,12 @@ function LombaExternal({
   const [clickTambahCondition, setClickTambahCondition] = useState("-");
   const [clickBatalCondition, setClickBatalCondition] = useState("-");
 
+  const renderBack =()=>{
+    setNamaLomba("")
+    setTanggal("")
+    setDataTable([])
+  }
+
   useEffect(() => {
     if (clickTambahCondition !== "-") {
       setDataTable((prevDataTable) => [...prevDataTable, clickTambahCondition]);
@@ -191,7 +197,12 @@ function LombaExternal({
             >
               Print
             </button>
-            <Button color={"#7E0303"} text={"Batalkan"} hoverBg="[#DE0404]" />
+            <button
+              className="w-32 h-10 bg-[#7E0303] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#DE0404]"
+              onClick={renderBack}
+            >
+              Batalkan
+            </button>
           </div>
         </div>
       </div>

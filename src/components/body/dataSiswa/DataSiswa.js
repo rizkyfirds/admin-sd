@@ -58,26 +58,6 @@ function DataSiswa({
     });
   }, [DeleteID]);
 
-//   const downloadPdf = () => {
-//     const doc = new jsPDF();
-
-//     // Atur konfigurasi gaya untuk teks
-//     const styles = {
-//         font: "times",
-//         fontStyle: "normal",
-//         fontSize: 12
-//     };
-
-//     // Terapkan konfigurasi gaya
-//     doc.autoTable({
-//         head: [tableHeaders],
-//         body: totalData.map((data) => keyValues.map((key) => data[key])),
-//         styles: styles
-//     });
-
-//     doc.save("siswa.pdf");
-// };
-
 const downloadPdf = () => {
   // Atur konfigurasi gaya untuk teks
   const styles = {
@@ -97,7 +77,13 @@ const downloadPdf = () => {
   // Terapkan konfigurasi gaya
   doc.autoTable({
       head: [tableHeaders],
-      body: totalData.map((data) => keyValues.map((key) => data[key])),
+      body: totalData.map((data) => keyValues.map((key) => {
+        if (key === "NamaAngkatan") {
+          return data?.kelas?.Nama_Angkatan !== undefined ? data.kelas.Nama_Angkatan : "-";
+        } else {
+          return data[key] !== undefined ? data[key] : "-";
+        }
+      })),
       styles: styles,
       headStyles: { fillColor: "#004B23", textColor: "#ffffff" },
   });

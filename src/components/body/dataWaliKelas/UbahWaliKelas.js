@@ -9,7 +9,7 @@ import SearchBar from "../search-bar/Search";
 import Pagination from "../pagination/Pagination";
 import axios from "axios";
 
-function Tambah({
+function Ubah({
   dataGuru,
   dataKelas,
   setShowTambah,
@@ -166,12 +166,12 @@ function Tambah({
             Data Wali Kelas /
           </h1>
         </button>
-        <h1 className="text-4xl font-['Segoe UI'] pl-2">Tambah</h1>
+        <h1 className="text-4xl font-['Segoe UI'] pl-2">Ubah</h1>
       </div>
       <div className="mt-8 mb-32 h-fit bg-white">
         <div className="flex pt-6 ml-8">
           <div className="font-bold mx-auto text-xl">
-            Form Tambah Wali Kelas Siswa
+            Form Ubah Wali Kelas Siswa
           </div>
         </div>
         <div className="w-full px-20 pt-10">
@@ -327,4 +327,4 @@ function Tambah({
   );
 }
 
-export default Tambah;
+export default Ubah;

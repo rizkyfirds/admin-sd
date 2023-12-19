@@ -5,7 +5,7 @@ import InputField from "../../inputField/InputField";
 import Button from "../../button/Button";
 import axios from "axios";
 
-function Ubah({ setShowUbah, data, setActionType}) {
+function Ubah({ setShowUbah, data, setActionType }) {
   // console.log("datattta ", data)
 
   const navigate = useNavigate();
@@ -42,35 +42,34 @@ function Ubah({ setShowUbah, data, setActionType}) {
   //   });
   // };
 
-  const handleUbahKeluarga = (
-    ) => {
-      const requestingData = {
-        ID_Siswa : nik,
-        Jenis: keluarga,
-        nama: namaKeluarga,
-        pekerjaan : pekerjaan,
-        alamat: alamat,
-        pendapatan: pendapatan,
-        Pendidikan_Terakhir :lulusan,
-        Email: email,
-        Nomor_HP: noKontak
-      };
-      console.log(requestingData)
-      axios({
-        method: "PATCH",
-        url: `http://localhost:3000/ortu/${nikOrtu}`,
-        data: requestingData,
-      }).then((result) => {
-        console.log("hasil",result);
-        if (result.data.msg == 'Ortu Updated') {
-          console.log("Updated success");
-          setActionType("update ortu")
-          renderBack();
-        } else {
-          console.log("gagal Updated, ada yg salah");
-        }
-      });
+  const handleUbahKeluarga = () => {
+    const requestingData = {
+      ID_Siswa: nik,
+      Jenis: keluarga,
+      nama: namaKeluarga,
+      pekerjaan: pekerjaan,
+      alamat: alamat,
+      pendapatan: pendapatan,
+      Pendidikan_Terakhir: lulusan,
+      Email: email,
+      Nomor_HP: noKontak,
     };
+    console.log(requestingData);
+    axios({
+      method: "PATCH",
+      url: `http://localhost:3000/ortu/${nikOrtu}`,
+      data: requestingData,
+    }).then((result) => {
+      console.log("hasil", result);
+      if (result.data.msg == "Ortu Updated") {
+        console.log("Updated success");
+        setActionType("update ortu");
+        renderBack();
+      } else {
+        console.log("gagal Updated, ada yg salah");
+      }
+    });
+  };
 
   // useEffect(() => {
   //   if (nik != "-") {
@@ -103,7 +102,7 @@ function Ubah({ setShowUbah, data, setActionType}) {
           </div>
         </div>
         <div className="w-full px-20 pt-10">
-        <div className="flex mt-4">
+          <div className="flex mt-4">
             <div className="flex w-24 h-11">
               <h1 className="font-SegoeUI my-auto">NIK Siswa</h1>
             </div>
@@ -183,9 +182,18 @@ function Ubah({ setShowUbah, data, setActionType}) {
         </div>
         <div className="py-10">
           <div className="flex justify-center gap-x-5">
-          <button className="w-32 h-10 bg-[#03045E] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#06F]" onClick={handleUbahKeluarga}>Simpan</button>
-            {/* <Button color={"#03045E"} text={"Simpan"} hoverBg="[#06F]" /> */}
-            <Button color={"#7E0303"} text={"Batalkan"} hoverBg="[#DE0404]" />
+            <button
+              className="w-32 h-10 bg-[#03045E] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#06F]"
+              onClick={handleUbahKeluarga}
+            >
+              Simpan
+            </button>
+            <button
+              className="w-32 h-10 bg-[#7E0303] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#DE0404]"
+              onClick={renderBack}
+            >
+              Batalkan
+            </button>
           </div>
         </div>
       </div>

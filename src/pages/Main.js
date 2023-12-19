@@ -19,7 +19,7 @@ import LoginPage from "./LoginPage.js";
 function Main() {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState("Dashboard");
-  const [loginStatus, setLoginStatus] = useState(true);
+  const [loginStatus, setLoginStatus] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showDataSiswa, setShowDataSiswa] = useState(false);
   const [showDataKeluarga, setShowDataKeluarga] = useState(false);
@@ -84,7 +84,7 @@ function Main() {
     "Alamat",
     "Lulusan",
     "Sertifikat",
-    "Ijazah",
+    "ijazah",
     "KTP",
     "KK",
     "Nomor_HP",
@@ -199,6 +199,18 @@ function Main() {
           setTableDataKelas([]);
         } else {
           setTableDataKelas(result.data.Isi);
+        }
+      });
+    }if (actionType === "update wali kelas" || actionType === "init") {
+      axios({
+        method: "GET",
+        url: `http://localhost:3000/List/kelas-siswa`,
+      }).then((result) => {
+        console.log("wali kelas ", result.data.Data);
+        if (result.status !== 200) {
+          setTableDataWaliKelas([]);
+        } else {
+          setTableDataWaliKelas(result.data.Data);
         }
       });
     }
@@ -480,6 +492,7 @@ function Main() {
     return (
       <div className="w-full h-full">
         <DataWaliKelas
+          dataWaliKelas = {tableDataWaliKelas}
           dataKelas = {tableDataKelas}
           dataGuru={tableDataGuru}
           tableHeaders={tableHeadersWaliKelas}

@@ -24,6 +24,7 @@ function DataKelas({
   kelas,
   setActionType
 }) {
+  // console.log("firstaaa ", totalData)
   const navigate = useNavigate();
   const [showTambah, setShowTambah] = useState(false);
   const [showUbah, setShowUbah] = useState("-");

@@ -37,6 +37,12 @@ function LombaImunisasi({
   const [clickTambahCondition, setClickTambahCondition] = useState("-");
   const [clickBatalCondition, setClickBatalCondition] = useState("-");
 
+  const renderBack =()=>{
+    setImunisasi("")
+    setTanggal("")
+    setDataTable([])
+  }
+
   useEffect(() => {
     if (clickTambahCondition !== "-") {
       setDataTable((prevDataTable) => [...prevDataTable, clickTambahCondition]);
@@ -57,16 +63,16 @@ function LombaImunisasi({
     const styles = {
       font: "times",
       fontStyle: "normal",
-      fontSize: 8
-  };
+      fontSize: 8,
+    };
 
-  // Atur konfigurasi orientasi kertas
-  const pdfConfig = {
-      orientation: "landscape"
-  };
+    // Atur konfigurasi orientasi kertas
+    const pdfConfig = {
+      orientation: "landscape",
+    };
 
-  // Buat objek jsPDF dengan konfigurasi orientasi kertas
-  const doc = new jsPDF(pdfConfig);
+    // Buat objek jsPDF dengan konfigurasi orientasi kertas
+    const doc = new jsPDF(pdfConfig);
 
     doc.autoTable({
       head: [tableHeaders],
@@ -192,7 +198,12 @@ function LombaImunisasi({
             >
               Print
             </button>
-            <Button color={"#7E0303"} text={"Batalkan"} hoverBg="[#DE0404]" />
+            <button
+              className="w-32 h-10 bg-[#7E0303] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#DE0404]"
+              onClick={renderBack}
+            >
+              Batalkan
+            </button>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 function DataWaliKelas({
+  dataWaliKelas,
   dataKelas,
   dataGuru,
   tableHeaders,
@@ -34,6 +35,7 @@ function DataWaliKelas({
   totalDataSiswa,
   keyValuesSiswa
 }) {
+  console.log("huuua ", walikelas)
   const navigate = useNavigate();
   const [showTambah, setShowTambah] = useState(false);
   const tableRef = useRef(null);
@@ -81,22 +83,28 @@ function DataWaliKelas({
     }
 
     const tableData = totalData.map((row) =>
-      keyValues.map((value) => {
-        let cellData = "-"; // Default value if the data is not available
+  keyValues.map((value) => {
+    let cellData = "-"; // Default value if the data is not available
 
-        // Handle nested data structure
-        if (value === "nama" || value === "Alamat") {
-          cellData =
-            row["kelas"]["walikelas"] && row["kelas"]["walikelas"][value]
-              ? row["kelas"]["walikelas"][value]
-              : "-";
-        } else {
-          cellData = row["kelas"] && row["kelas"][value] ? row["kelas"][value] : "-";
-        }
+    // Handle nested data structure
+    if (value === "nama" || value === "Alamat") {
+      cellData =
+        row["kelas"]["walikelas"] && row["kelas"]["walikelas"][value]
+          ? row["kelas"]["walikelas"][value]
+          : "-";
+    } else if (value === "Siswa") {
+      const foundData = dataWaliKelas.find(
+        (rowWaliData) => rowWaliData["Kelas"]["ID"] === row["kelas"]["ID"]
+      );
+      cellData = foundData ? foundData["Siswa"].length : "-";
+    } else {
+      cellData = row["kelas"] && row["kelas"][value] ? row["kelas"][value] : "-";
+    }
 
-        return cellData;
-      })
-    );
+    return cellData;
+  })
+);
+
 
     doc.autoTable({
       head: [keyValues],
@@ -146,6 +154,7 @@ function DataWaliKelas({
               {/*Table*/}
               <div className="pb-5" ref={tableRef}>
                 <TableWali
+                  dataWaliKelas={dataWaliKelas}
                   headers={tableHeaders}
                   data={totalData}
                   keyValues={keyValues}

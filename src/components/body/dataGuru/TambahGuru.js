@@ -29,38 +29,37 @@ function Tambah({ setShowTambah, setActionType }) {
     navigate("/data-guru");
   };
 
-  const handleTambahGuru = (
-    ) => {
-      const requestingData = {
-        id : nik,
-        nama: nama,
-        Email: email,
-        Nomor_HP: nomorKontak,
-        Tempat_Lahir: tempatLahir,
-        Tanggal_Lahir: tanggalLahir,
-        Alamat: alamat,
-        Lulusan: lulusan,
-        Sertifikat: linkSertifikat,
-        Publikasi: filePublikasi,
-        KK: linkKK,
-        KTP: linkKTP
-      };
-      console.log("data masuk ",requestingData)
-      axios({
-        method: "POST",
-        url: "http://localhost:3000/guru",
-        data: requestingData,
-      }).then((result) => {
-        console.log("hasil",result);
-        if (result.data.msg == 'Guru Created') {
-          console.log("register success");
-          setActionType("update guru")
-          renderBack();
-        } else {
-          console.log("gagal menambahkan, ada yg salah");
-        }
-      });
+  const handleTambahGuru = () => {
+    const requestingData = {
+      id: nik,
+      nama: nama,
+      Email: email,
+      Nomor_HP: nomorKontak,
+      Tempat_Lahir: tempatLahir,
+      Tanggal_Lahir: tanggalLahir,
+      Alamat: alamat,
+      Lulusan: lulusan,
+      Sertifikat: linkSertifikat,
+      Publikasi: filePublikasi,
+      KK: linkKK,
+      KTP: linkKTP,
     };
+    console.log("data masuk ", requestingData);
+    axios({
+      method: "POST",
+      url: "http://localhost:3000/guru",
+      data: requestingData,
+    }).then((result) => {
+      console.log("hasil", result);
+      if (result.data.msg == "Guru Created") {
+        console.log("register success");
+        setActionType("update guru");
+        renderBack();
+      } else {
+        console.log("gagal menambahkan, ada yg salah");
+      }
+    });
+  };
 
   return (
     <div className="w-full h-full">
@@ -167,9 +166,18 @@ function Tambah({ setShowTambah, setActionType }) {
         </div>
         <div className="mt-10 pb-10">
           <div className="flex justify-center gap-x-5">
-          <button className="w-32 h-10 bg-[#03045E] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#06F]" onClick={handleTambahGuru}>Simpan</button>
-            {/* <Button color={"#03045E"} text={"Simpan"} hoverBg="[#06F]" /> */}
-            <Button color={"#7E0303"} text={"Batalkan"} hoverBg="[#DE0404]" />
+            <button
+              className="w-32 h-10 bg-[#03045E] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#06F]"
+              onClick={handleTambahGuru}
+            >
+              Simpan
+            </button>
+            <button
+              className="w-32 h-10 bg-[#7E0303] text-center text-white font-bold font-['Segoe UI'] hover:bg-[#DE0404]"
+              onClick={renderBack}
+            >
+              Batalkan
+            </button>
           </div>
         </div>
       </div>

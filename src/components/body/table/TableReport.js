@@ -49,9 +49,19 @@ const TableReport = ({
                   {keyValues &&
                     keyValues.map((value, keyIndex) => (
                       <td key={keyIndex} className="text-center py-1.5">
-                        {row[value] !== undefined ? row[value] : "-"}
+                        {value === "NamaAngkatan"
+                          ? // console.log("first", row),
+                            row["kelas"] &&
+                            row["kelas"]["Nama_Angkatan"] !== undefined
+                            ? row["kelas"]["Nama_Angkatan"]
+                            : "-"
+                          : // console.log("other", row),
+                          row[value] !== undefined
+                          ? row[value]
+                          : "-"}
                       </td>
                     ))}
+
                   <td className="text-center Fpy-1.5">
                     {conditionButton === "tambah" ? (
                       <button
