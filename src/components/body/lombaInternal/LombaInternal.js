@@ -39,6 +39,7 @@ function LombaInternal({
 
   useEffect(() => {
     if (clickTambahCondition !== "-") {
+      console.log("j")
       setDataTable((prevDataTable) => [...prevDataTable, clickTambahCondition]);
     }
     setClickTambahCondition("-");
@@ -69,7 +70,7 @@ function LombaInternal({
   const doc = new jsPDF(pdfConfig);
     doc.autoTable({
       head: [tableHeaders],
-      body: totalData.map((data) => keyValues.map((key) => data[key])),
+      body: dataTable.map((data) => keyValues.map((key) => data[key])),
       styles: styles,
       headStyles: { fillColor: "#004B23", textColor: "#ffffff" },
     });
@@ -128,10 +129,10 @@ function LombaInternal({
                 <div className="flex justify-between">
                   <span>
                     Showing {startIndex2 + 1} to{" "}
-                    {Math.min(endIndex2, totalData.length)} entries
+                    {Math.min(endIndex2, dataTable.length)} entries
                   </span>
                   <Pagination
-                    totalPages={Math.ceil(totalData.length / itemsPerPage2)}
+                    totalPages={Math.ceil(dataTable.length / itemsPerPage2)}
                     currentPage={currentPage2}
                     onPageChange={handlePageChange2}
                   />

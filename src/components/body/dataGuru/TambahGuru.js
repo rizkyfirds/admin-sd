@@ -43,6 +43,7 @@ function Tambah({ setShowTambah, setActionType }) {
         Sertifikat: linkSertifikat,
         Publikasi: filePublikasi,
         KK: linkKK,
+        KTP: linkKTP
       };
       console.log("data masuk ",requestingData)
       axios({
@@ -74,7 +75,7 @@ function Tambah({ setShowTambah, setActionType }) {
         </button>
         <h1 className="text-4xl font-['Segoe UI'] pl-2">Tambah</h1>
       </div>
-      <div className="my-8 h-fit bg-white">
+      <div className="mt-8 mb-16 h-fit bg-white">
         <div className="flex pt-6 ml-8">
           <div className="font-bold mx-auto text-xl">Form Tambah Data Guru</div>
         </div>

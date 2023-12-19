@@ -7,7 +7,6 @@ import CheckBoxInputField from "../../inputField/CheckBoxInputField";
 import axios from "axios";
 
 function Ubah({ setShowUbah, setActionType, data }) {
-  console.log("datattta ", data)
   const navigate = useNavigate();
   const [nama, setNama] = useState(data.nama);
   const [alamat, setAlamat] = useState(data.Alamat);
@@ -17,7 +16,7 @@ function Ubah({ setShowUbah, setActionType, data }) {
   const [lulusan, setLulusan] = useState(data.lulusan);
   const [linkSertifikat, setLinkSertifikat] = useState(data.Sertifikat);
   const [linkKK, setKK] = useState(data.KK);
-  const [linkKTP, setKTP] = useState("-");
+  const [linkKTP, setKTP] = useState(data.KTP);
   const [nomorKontak, setNomorKontak] = useState(data.Nomor_HP);
   const [email, setEmail] = useState(data.Email);
   const [linkIjazah, setLinkIjazah] = useState("");
@@ -44,6 +43,7 @@ function Ubah({ setShowUbah, setActionType, data }) {
         Sertifikat: linkSertifikat,
         Publikasi: filePublikasi,
         KK: linkKK,
+        KTP: linkKTP
       };
       console.log(requestingData)
       axios({

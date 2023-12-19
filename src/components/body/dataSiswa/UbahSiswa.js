@@ -15,7 +15,7 @@ function Ubah({ setShowUbah, setActionType, data }) {
   const [angkatan, setAngkatan] = useState(data.Nama_Angkatan);
   const [nik, setNIK] = useState(data.nik);
   const [tempatLahir, setTempatLahir] = useState(data.Tempat_lahir);
-  const [tanggalLahir, setTanggalLahir] = useState(data.Tanggal_lahir);
+  const [tanggalLahir, setTanggalLahir] = useState(data.Tanggal_Lahir);
   const [sdSebelum, setSdSebelum] = useState(data.Asal_SD);
   const [tkSebelum, setTkSebelum] = useState(data.AsalTk);
   const [prestasi, setPrestasi] = useState(data.Prestasi);
@@ -36,7 +36,7 @@ function Ubah({ setShowUbah, setActionType, data }) {
       Tanggal_Lahir: tanggalLahir,
       Alamat: alamat,
       Tahun_MasukSDIT: tahunMasuk,
-      AsalTk: tkSebelum,
+      AsalTK: tkSebelum,
       Asal_SD: sdSebelum,
       Prestasi: prestasi,
       LinkPrestasi: filePrestasi,

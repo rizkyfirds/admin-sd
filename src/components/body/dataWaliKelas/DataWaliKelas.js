@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Tambah from "./TambahWaliKelas";
-import Table from "../table/Table";
+import TableWali from "../table/TableWali";
 import SearchBar from "../search-bar/Search";
 import Pagination from "../pagination/Pagination";
 import jsPDF from "jspdf";
@@ -145,7 +145,7 @@ function DataWaliKelas({
               </div>
               {/*Table*/}
               <div className="pb-5" ref={tableRef}>
-                <Table
+                <TableWali
                   headers={tableHeaders}
                   data={totalData}
                   keyValues={keyValues}

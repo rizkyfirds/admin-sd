@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Tambah from "./TambahKeluarga";
+import Ubah from "./UbahKeluarga";
 import Table from "../table/Table";
 import SearchBar from "../search-bar/Search";
 import Pagination from "../pagination/Pagination";
@@ -22,7 +23,7 @@ function DataKeluarga({
   endIndex,
   keluargaCek,
   dataSiswa,
-  setActionType
+  setActionType,
 }) {
   const navigate = useNavigate();
   const [showTambah, setShowTambah] = useState(false);
@@ -42,8 +43,15 @@ function DataKeluarga({
   };
 
   useEffect(() => {
-    console.log("ini deket ", DeleteID)
-    if(DeleteID !== "-"){
+    if (showUbah !== "-") {
+      // console.log("ajajaj nih ", showUbah);
+      navigate("/data-keluarga/ubah-keluarga");
+    }
+  }, [showUbah]);
+
+  useEffect(() => {
+    console.log("ini deket ", DeleteID);
+    if (DeleteID !== "-") {
       axios({
         method: "DELETE",
         url: `http://localhost:3000/ortu/${DeleteID.ID}`,
@@ -56,14 +64,14 @@ function DataKeluarga({
 
   const downloadPdf = () => {
     const pdfConfig = {
-      orientation: "landscape"
+      orientation: "landscape",
     };
     const doc = new jsPDF(pdfConfig);
     const styles = {
       font: "times",
       fontStyle: "normal",
-      fontSize: 8
-  };
+      fontSize: 8,
+    };
     doc.autoTable({
       head: [tableHeaders],
       body: totalData.map((data) =>
@@ -81,9 +89,10 @@ function DataKeluarga({
     doc.save("keluarga_table.pdf");
   };
 
+  console.log("keluarga ", totalData)
   return (
     <div className="w-full h-full">
-      {showTambah == false ? (
+      {showTambah == false && showUbah == "-" ? (
         <>
           <h1 className="font-bold text-4xl font-['Segoe UI']">
             Data Keluarga Siswa
@@ -153,7 +162,25 @@ function DataKeluarga({
       <Routes>
         <Route
           path="/data-keluarga/tambah-keluarga"
-          element={<Tambah setShowTambah={setShowTambah} data={dataSiswa} />}
+          element={
+            <Tambah
+              setActionType={setActionType}
+              setShowTambah={setShowTambah}
+              data={dataSiswa}
+            />
+          }
+        />
+        <Route
+          path="/data-keluarga/ubah-keluarga"
+          element={
+            <Ubah
+              setShowUbah={setShowUbah}
+              setActionType={setActionType}
+              data={showUbah}
+              // nama={nama}
+              // nik={nik}
+            />
+          }
         />
       </Routes>
     </div>

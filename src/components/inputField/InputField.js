@@ -25,13 +25,13 @@ function InputField({
   const [s2Univ, setS2Univ] = useState("");
   const [s3Univ, setS3Univ] = useState("");
   
-  const [inputValue, setInputValue] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
-  const dataSiswa = datas
-  const dataNIK = dataSiswa ? [...new Set(dataSiswa.map((item) => item.NIK))] : [];
+  // const [inputValue, setInputValue] = useState('');
+  // const [filteredData, setFilteredData] = useState([]);
+  // const dataSiswa = datas
+  // const dataNIK = dataSiswa ? [...new Set(dataSiswa.map((item) => item.NIK))] : [];
   // console.log("nik ",dataNIK)
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [selectedNIK, setSelectedNIK] = useState(null);
+  // const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  // const [selectedNIK, setSelectedNIK] = useState(null);
   // nikFiltered = selectedNIK
 
   const handleInputChange = (e) => {

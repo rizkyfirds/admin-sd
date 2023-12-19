@@ -29,7 +29,7 @@ function LombaImunisasi({
 }) {
   // console.log("uuuuu ", totalData);
   const navigate = useNavigate();
-  const [NamaLomba, setNamaLomba] = useState("");
+  const [imunisasi, setImunisasi] = useState("");
   const [tanggal, setTanggal] = useState("");
   const [dataTable, setDataTable] = useState([]);
   const tableRef = useRef(null);
@@ -70,11 +70,11 @@ function LombaImunisasi({
 
     doc.autoTable({
       head: [tableHeaders],
-      body: totalData.map((data) => keyValues.map((key) => data[key])),
+      body: dataTable.map((data) => keyValues.map((key) => data[key])),
       styles: styles,
       headStyles: { fillColor: "#004B23", textColor: "#ffffff" },
     });
-    doc.save(`${NamaLomba}.pdf`);
+    doc.save(`${imunisasi}.pdf`);
   };
 
   return (
@@ -88,7 +88,7 @@ function LombaImunisasi({
           <InputField
             Value={"Nama Imunisasi"}
             Placeholder={"isi nama kegiatan imunisasi..."}
-            changeHandler={(e) => setNamaLomba(e.target.value)}
+            changeHandler={(e) => setImunisasi(e.target.value)}
           />
           <InputField
             Value={"Tanggal"}
@@ -129,10 +129,10 @@ function LombaImunisasi({
                 <div className="flex justify-between">
                   <span>
                     Showing {startIndex2 + 1} to{" "}
-                    {Math.min(endIndex2, totalData.length)} entries
+                    {Math.min(endIndex2, dataTable.length)} entries
                   </span>
                   <Pagination
-                    totalPages={Math.ceil(totalData.length / itemsPerPage2)}
+                    totalPages={Math.ceil(dataTable.length / itemsPerPage2)}
                     currentPage={currentPage2}
                     onPageChange={handlePageChange2}
                   />

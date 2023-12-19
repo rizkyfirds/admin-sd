@@ -6,14 +6,16 @@ import bgLogin from "../assets/bgLogin.svg";
 import axios from "axios";
 
 function LoginPage({ setLoginStatus }) {
+  const [gagal, setGagal] = useState(false);
   const [usernama, setUsernama] = useState(null);
   const [pass, setPass] = useState(null);
-  console.log("user ", setLoginStatus);
+
+  // console.log("user ", setLoginStatus);
 
   const handleLogin = () => {
-    console.log("usernama type:", typeof usernama);
-    console.log("pass type:", typeof pass);
-    console.log("pass :", pass);
+    // console.log("usernama type:", typeof usernama);
+    // console.log("pass type:", typeof pass);
+    // console.log("pass :", pass);
 
     const requestingData = {
       id: usernama,
@@ -37,6 +39,7 @@ function LoginPage({ setLoginStatus }) {
           console.log("login success");
           setLoginStatus(true);
         } else {
+          setGagal(true);
           setLoginStatus(false);
           console.log("gagal login success");
         }
@@ -47,13 +50,13 @@ function LoginPage({ setLoginStatus }) {
   };
 
   return (
-    <div className="h-screen bg-green-900 relative">
+    <div className="flex h-screen bg-green-900 relative">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgLogin})` }}
       ></div>
-      <div className="flex justify-center">
-        <div className="py-36 min-mx-widthLoginForm max-w-fit h-full relative z-10">
+      <div className="flex m-auto justify-center">
+        <div className="min-mx-widthLoginForm max-w-fit h-full relative z-10">
           <div className="bg-white">
             <div>
               <img className="mx-auto pt-8" src={Logo} alt="" />
@@ -68,10 +71,16 @@ function LoginPage({ setLoginStatus }) {
                   <p className="text-xl font-['Segoe UI'] font-normal">
                     Username
                   </p>
-                  <div className="pt-2 flex bg-[#D9D9D9] my-auto h-11">
+                  <div
+                    className={`pt-2 flex ${
+                      gagal ? "bg-red-300" : "bg-[#D9D9D9]"
+                    } my-auto h-11`}
+                  >
                     <FaUserAlt className="ml-4 my-auto" />
                     <input
-                      className="bg-transparent ml-6 w-full flex my-auto"
+                      className={`pl-2 bg-transparent ml-6 w-full flex my-auto${
+                        gagal ? "border-red-500" : ""
+                      }`}
                       type="text"
                       placeholder="masukkan username "
                       onChange={(e) => setUsernama(e.target.value)}
@@ -82,10 +91,16 @@ function LoginPage({ setLoginStatus }) {
                   <p className="text-xl font-['Segoe UI'] font-normal">
                     Password
                   </p>
-                  <div className="pt-2 flex bg-[#D9D9D9] my-auto h-11">
+                  <div
+                    className={`pt-2 flex ${
+                      gagal ? "bg-red-300" : "bg-[#D9D9D9]"
+                    } my-auto h-11`}
+                  >
                     <RiLockPasswordFill className="ml-4 my-auto" />
                     <input
-                      className="bg-transparent ml-6 w-full flex my-auto"
+                      className={`pl-2 bg-transparent ml-6 w-full flex my-auto ${
+                        gagal ? "border-red-500" : ""
+                      }`}
                       type="password"
                       placeholder="masukkan password "
                       onChange={(e) => setPass(e.target.value)}
@@ -100,9 +115,12 @@ function LoginPage({ setLoginStatus }) {
                     Masuk
                   </button>
                   <div className="w-full text-center mt-6">
-                    <p className="pb-5">
-                      Copyright c 2023. SD Islam Terpadu INSPIRATIF Bojongsari.
-                    </p>
+                    <div className="flex">
+                      <p className="pb-5">Copyright c 2023. </p>
+                      <p className="text-[#004B23] font-bold">
+                        SD Islam Terpadu INSPIRATIF Bojongsari.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

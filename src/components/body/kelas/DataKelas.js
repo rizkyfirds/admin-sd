@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Tambah from "./TambahKelas";
+import Ubah from "./UbahKelas";
 import Table from "../table/Table";
 import SearchBar from "../search-bar/Search";
 import Pagination from "../pagination/Pagination";
@@ -41,11 +42,18 @@ function DataKelas({
   };
 
   useEffect(() => {
+    if (showUbah !== "-") {
+      // console.log("ajajaj nih ", showUbah);
+      navigate("/data-kelas/ubah-kelas");
+    }
+  }, [showUbah]);
+
+  useEffect(() => {
     if(DeleteID !== "-"){
-      // console.log("daaaa ", DeleteID.kelas.ID)
+      console.log("daaaa ", DeleteID.id)
       axios({
         method: "DELETE",
-        url: `http://localhost:3000/kelas/${DeleteID.kelas.ID}`,
+        url: `http://localhost:3000/kelas/${DeleteID.id}`,
       }).then((result) => {
         // console.log(DeleteID.kelas.ID, "Delete Success", result);
         setActionType("update kelas");
@@ -85,7 +93,7 @@ function DataKelas({
 
   return (
     <div className="w-full h-full">
-      {showTambah == false ? (
+      {showTambah == false && showUbah == "-" ? (
         <>
           <h1 className="font-bold text-4xl font-['Segoe UI']">Data Kelas</h1>
           <div className="mt-8 h-fit bg-white">
@@ -158,6 +166,10 @@ function DataKelas({
         <Route
           path="/data-kelas/tambah-kelas"
           element={<Tambah setShowTambah={setShowTambah} setActionType={setActionType}/>}
+        />
+        <Route
+          path="/data-kelas/ubah-kelas"
+          element={<Ubah setShowUbah={setShowUbah} setActionType={setActionType}  data={showUbah}/>}
         />
       </Routes>
     </div>

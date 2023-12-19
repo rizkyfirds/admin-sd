@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function SearchField({
   Value,
@@ -9,24 +9,44 @@ function SearchField({
 }) {
   console.log("cekekek ", datas);
   const dataSiswa = datas || [];
-  console.log("yuuhh ", dataSiswa);
+  // console.log("yuuhh ", dataSiswa);
   const dataNIK = dataSiswa.map((item) => (item.NIK ? item.NIK : item.ID)) || [];
   const [filteredData, setFilteredData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Klik dilakukan di luar elemen dropdown, sembunyikan dropdown
+        setIsDropdownVisible(false);
+      }
+    };
+
+    // Tambahkan event listener saat komponen dimount
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    // Hapus event listener saat komponen di-unmount
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [dropdownRef]);
+
   const handleSearchChange = (e) => {
     const inputValue = e.target.value;
     setInputValue(inputValue);
-
+  
     // Filter data based on input value
     const filteredResults = dataNIK.filter(
-      (item) => item && item.toLowerCase().includes(inputValue.toLowerCase())
+      (item) => item && String(item).toLowerCase().includes(inputValue.toLowerCase())
     );
-
+  
     setFilteredData(filteredResults);
     setIsDropdownVisible(true);
   };
+  
 
   const handleSelectChange = (selectedValue) => {
     setInputValue(selectedValue);
@@ -52,7 +72,7 @@ function SearchField({
       </div>
       <div className="w-full relative">
         <div className="relative">
-          <div className="w-full relative">
+          <div className="w-full relative "ref={dropdownRef}>
             <input
               type="text"
               placeholder={Placeholder}

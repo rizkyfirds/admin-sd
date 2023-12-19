@@ -19,7 +19,7 @@ import LoginPage from "./LoginPage.js";
 function Main() {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState("Dashboard");
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [loginStatus, setLoginStatus] = useState(true);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showDataSiswa, setShowDataSiswa] = useState(false);
   const [showDataKeluarga, setShowDataKeluarga] = useState(false);
@@ -49,9 +49,9 @@ function Main() {
   const keyValuesSiswa = [
     "nama",
     "NIS",
-    "NIK",
+    "ID",
     "No_KartuKeluarga",
-    "Tempat_Lahir",
+    "Tempat_lahir",
     "Tanggal_Lahir",
     "Alamat",
     "AsalTK",
@@ -59,7 +59,7 @@ function Main() {
     "NamaAngkatan",
     "Prestasi",
     "LinkPrestasi",
-    "TahunMasuk",
+    "Tahun_MasukSDIT",
   ];
   const [tableDataSiswa, setTableDataSiswa] = useState(null);
   const tableHeadersGuru = [
@@ -87,7 +87,7 @@ function Main() {
     "Ijazah",
     "KTP",
     "KK",
-    "No_Kontak",
+    "Nomor_HP",
     "Email",
   ];
   const [tableDataGuru, setTableDataGuru] = useState(null);
@@ -129,14 +129,16 @@ function Main() {
     "Nama Wali",
     "Grade",
     "Nama Angkatan",
-    "Siswa",
+    "Kelas",
+    "Total Siswa",
     "Alamat",
     "Tahun Masuk",
   ];
   const keyValuesWaliKelas = [
     "nama",
     "Grade_Kelas",
-    " Nama_Angkatan",
+    "Nama_Angkatan",
+    "NamaKelas",
     "Siswa",
     "Alamat",
     "Tahun_Masuk",
@@ -192,8 +194,8 @@ function Main() {
         method: "GET",
         url: `http://localhost:3000/List/kelas`,
       }).then((result) => {
-        console.log("kelas ", result.data["Message"]);
-        if (result.data["Message"] === "Server Error") {
+        console.log("kelas ", result.data.Isi);
+        if (result.status !== 200) {
           setTableDataKelas([]);
         } else {
           setTableDataKelas(result.data.Isi);
@@ -227,8 +229,8 @@ function Main() {
   };
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const startIndex2 = (currentPage - 1) * itemsPerPage;
-  const endIndex2 = startIndex + itemsPerPage;
+  const startIndex2 = (currentPage2 - 1) * itemsPerPage;
+  const endIndex2 = startIndex2 + itemsPerPage;
 
   useEffect(() => {
     if (showMenu === "Dashboard") {

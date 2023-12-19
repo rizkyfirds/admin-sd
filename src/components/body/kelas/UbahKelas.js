@@ -5,16 +5,21 @@ import InputField from "../../inputField/InputField";
 import Button from "../../button/Button";
 import axios from "axios";
 
-function Tambah({ setShowTambah, setActionType }) {
+function Ubah({ setShowUbah, setActionType, data }) {
   const navigate = useNavigate();
-  const [grade, setGrade] = useState("");
-  const [kelas, setKelas] = useState("");
-  const [namaAngkatan, setNamaAngkatan] = useState("");
-  const [tahunMasuk, setTahunMasuk] = useState("");
+  const [grade, setGrade] = useState(data.Grade_Kelas);
+  const [kelas, setKelas] = useState(data.NamaKelas);
+  const [namaAngkatan, setNamaAngkatan] = useState(data.Nama_Angkatan);
+  const [tahunMasuk, setTahunMasuk] = useState(data.Tahun_Masuk);
+  const [waliKelas, setWaliKelas] = useState(data.WaliKelas);
+  
+  // if (data.WaliKelas !== null && data.WaliKelas !== undefined) {
+  //   setWaliKelas(data.WaliKelas);
+  // }
 
+  // console.log(data.id,"masuk ubah kelas", data.WaliKelas)
   const renderBack = () => {
-    console.log("masuk")
-    setShowTambah(false)
+    setShowUbah("-")
     navigate("/data-kelas")
   }
 
@@ -24,21 +29,21 @@ function Tambah({ setShowTambah, setActionType }) {
         Grade_Kelas : grade,
         Nama_Angkatan	: namaAngkatan,
         NamaKelas : kelas,
-        Tahun_Masuk : tahunMasuk
+        Tahun_Masuk : tahunMasuk,
+        WaliKelas :waliKelas
       };
-      console.log(requestingData)
       axios({
-        method: "POST",
-        url: "http://localhost:3000/kelas",
+        method: "PATCH",
+        url: `http://localhost:3000/kelas/${data.id}`,
         data: requestingData,
       }).then((result) => {
-        console.log("hasil",result);
-        if (result.data.msg == 'Kelas Created') {
-          console.log("register success");
+        console.log("hasil ubah",result);
+        if (result.data.msg == 'Kelas Updated') {
+          console.log("ubah success");
           setActionType("update kelas")
           renderBack();
         } else {
-          console.log("gagal menambahkan, ada yg salah");
+          console.log("gagal ubah, ada yg salah");
         }
       });
     };
@@ -49,35 +54,35 @@ function Tambah({ setShowTambah, setActionType }) {
         <button>
           <h1 className="font-bold text-4xl font-['Segoe UI']" onClick={renderBack}>Data Kelas /</h1>
         </button>
-        <h1 className="text-4xl font-['Segoe UI'] pl-2">Tambah</h1>
+        <h1 className="text-4xl font-['Segoe UI'] pl-2">Ubah</h1>
       </div>
       <div className="my-8 h-fit bg-white">
         <div className="flex pt-6 ml-8">
           <div className="font-bold mx-auto text-xl">
-            Form Tambah Kelas
+            Form Ubah Kelas
           </div>
         </div>
         <div className="w-full px-20 pt-10">
           <InputField
             Value={"Grade"}
-            Placeholder={"pilih grade"}
+            Placeholder={grade}
             changeHandler={(e) => setGrade(e.target.value)}
             dropdown = {true}
             ManyValue={["1", "2", "3","4","5","6"]}
           />
           <InputField
             Value={"Kelas"}
-            Placeholder={"isi kelas"}
+            Placeholder={kelas}
             changeHandler={(e) => setKelas(e.target.value)}
           />
           <InputField
             Value={"Nama Angkatan"}
-            Placeholder={"isi nama angkatan"}
+            Placeholder={namaAngkatan}
             changeHandler={(e) => setNamaAngkatan(e.target.value)}
             />
           <InputField
             Value={"Tahun Masuk"}
-            Placeholder={"isi tahun masuk"}
+            Placeholder={tahunMasuk}
             changeHandler={(e) => setTahunMasuk(e.target.value)}
             tanggal={true}
             />
@@ -93,4 +98,4 @@ function Tambah({ setShowTambah, setActionType }) {
   );
 }
 
-export default Tambah;
+export default Ubah;

@@ -69,7 +69,7 @@ function LombaExternal({
   const doc = new jsPDF(pdfConfig);
     doc.autoTable({
       head: [tableHeaders],
-      body: totalData.map((data) => keyValues.map((key) => data[key])),
+      body: dataTable.map((data) => keyValues.map((key) => data[key])),
       styles: styles,
       headStyles: { fillColor: "#004B23", textColor: "#ffffff" },
     });
@@ -86,7 +86,7 @@ function LombaExternal({
         <div className="w-full px-20 pt-10">
           <InputField
             Value={"Nama Lomba"}
-            Placeholder={"isi nama lomba atau tema lomba internal..."}
+            Placeholder={"isi nama lomba atau tema lomba external..."}
             changeHandler={(e) => setNamaLomba(e.target.value)}
           />
           <InputField
@@ -128,10 +128,10 @@ function LombaExternal({
                 <div className="flex justify-between">
                   <span>
                     Showing {startIndex2 + 1} to{" "}
-                    {Math.min(endIndex2, totalData.length)} entries
+                    {Math.min(endIndex2, dataTable.length)} entries
                   </span>
                   <Pagination
-                    totalPages={Math.ceil(totalData.length / itemsPerPage2)}
+                    totalPages={Math.ceil(dataTable.length / itemsPerPage2)}
                     currentPage={currentPage2}
                     onPageChange={handlePageChange2}
                   />

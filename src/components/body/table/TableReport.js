@@ -15,7 +15,7 @@ const TableReport = ({
   // console.log("lll ", data);
 
   const handleButton = (e) => {
-    console.log("huyyy ",e)
+    // console.log("huyyy ",e)
     setConditionButton(e);
   };
 

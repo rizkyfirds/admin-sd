@@ -15,12 +15,14 @@ const Table = ({
   setUbah,
   setDeleteID,
 }) => {
-  // console.log("lll ", data);
+  console.log("lllop ", data);
 
-  const filteredData = data.filter((item) => {
-    const values = Object.values(item).join(" ").toLowerCase();
-    return values.includes(searchTerm.toLowerCase());
-  });
+  const filteredData = Array.isArray(data)
+    ? data.filter((item) => {
+        const values = Object.values(item).join(" ").toLowerCase();
+        return values.includes(searchTerm.toLowerCase());
+      })
+    : [];
   return (
     <div className="overflow-x-auto">
       <table className="mt-2 min-w-full">
@@ -46,6 +48,7 @@ const Table = ({
                       <td className="text-center py-1.5">
                         {String(startIndex + rowIndex + 1).padStart(2, "0")}
                       </td>
+                      {console.log("roww", row)}
                       {keyValues &&
                         keyValues.map((value, keyIndex) => (
                           <td key={keyIndex} className="text-center py-1.5">
@@ -90,67 +93,70 @@ const Table = ({
               )}
             </tbody>
           </>
-        ) : kelas == true ? (
-          <>
-            <thead className="bg-[#D9D9D9]">
-              <tr>
-                <th className="text-center py-1.5">No</th>
-                {headers.map((header, index) => (
-                  <th key={index} className="text-center py-1.5 w-fit">
-                    {header}
-                  </th>
-                ))}
-                <th className="text-center py-1.5 w-20">Aksi</th>
-              </tr>
-            </thead>
-            <tbody className="bg-[#E5E3E3]">
-              {filteredData.length > 0 ? (
-                filteredData
-                  .slice(startIndex, startIndex + itemsPerPage)
-                  .map((row, rowIndex) => {
-                    return (
-                      <tr key={startIndex + rowIndex}>
-                        <td className="text-center py-1.5">
-                          {String(startIndex + rowIndex + 1).padStart(2, "0")}
-                        </td>
-                        {keyValues &&
-                          keyValues.map((value, keyIndex) => (
-                            <td key={keyIndex} className="text-center py-1.5">
-                              {row["kelas"][value] !== undefined
-                                ? row["kelas"][value]
-                                : "-"}
-                            </td>
-                          ))}
-                        <td className="text-center Fpy-1.5">
-                          <button
-                            className="bg-[#805B10] hover:bg-[#FFB703] text-white mr-2 p-1"
-                            onClick={() => setUbah(row)}
-                          >
-                            <FaRegEdit className="text-xl" />
-                          </button>
-                          <button
-                            className="bg-[#7E0303] hover:bg-[#DE0404] text-white p-1"
-                            onClick={() => setDeleteID(row)}
-                          >
-                            <MdDeleteForever className="text-xl" />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-              ) : (
-                <tr>
-                  <td
-                    colSpan={headers.length + 2}
-                    className="text-center py-1.5"
-                  >
-                    No data available
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </>
-        ) : keluargaCek == false || keluargaCek == undefined ? (
+        ) : // : kelas == true ? (
+        //   <>
+        //     <thead className="bg-[#D9D9D9]">
+        //       <tr>
+        //         <th className="text-center py-1.5">No</th>
+        //         {headers.map((header, index) => (
+        //           <th key={index} className="text-center py-1.5 w-fit">
+        //             {header}
+        //           </th>
+        //         ))}
+        //         <th className="text-center py-1.5 w-20">Aksi</th>
+        //       </tr>
+        //     </thead>
+        //     <tbody className="bg-[#E5E3E3]">
+        //       {filteredData.length > 0 ? (
+        //         filteredData
+        //           .slice(startIndex, startIndex + itemsPerPage)
+        //           .map((row, rowIndex) => {
+        //             console.log("oopp ", row )
+        //             return (
+        //               <tr key={startIndex + rowIndex}>
+        //                 <td className="text-center py-1.5">
+        //                   {String(startIndex + rowIndex + 1).padStart(2, "0")}
+        //                 </td>
+        //                 {keyValues &&
+        //                   keyValues.map((value, keyIndex) => (
+        //                     <td key={keyIndex} className="text-center py-1.5">
+        //                       {row["kelas"][value] !== undefined
+        //                         ? row["kelas"][value]
+        //                         : "-"}
+        //                     </td>
+        //                   ))}
+        //                 <td className="text-center Fpy-1.5">
+        //                   <button
+        //                     className="bg-[#805B10] hover:bg-[#FFB703] text-white mr-2 p-1"
+        //                     onClick={() => setUbah(row)}
+        //                   >
+        //                     <FaRegEdit className="text-xl" />
+        //                   </button>
+        //                   <button
+        //                     className="bg-[#7E0303] hover:bg-[#DE0404] text-white p-1"
+        //                     onClick={() => setDeleteID(row)}
+        //                   >
+        //                     <MdDeleteForever className="text-xl" />
+        //                   </button>
+        //                 </td>
+        //               </tr>
+        //             );
+        //           })
+        //       )
+        //       : (
+        //         <tr>
+        //           <td
+        //             colSpan={headers.length + 2}
+        //             className="text-center py-1.5"
+        //           >
+        //             No data available
+        //           </td>
+        //         </tr>
+        //       )}
+        //     </tbody>
+        //   </>
+        // )
+        keluargaCek == false || keluargaCek == undefined ? (
           <>
             <thead className="bg-[#D9D9D9]">
               <tr>
@@ -175,7 +181,14 @@ const Table = ({
                       {keyValues &&
                         keyValues.map((value, keyIndex) => (
                           <td key={keyIndex} className="text-center py-1.5">
-                            {row[value] !== undefined ? row[value] : "-"}
+                            {value === "NamaAngkatan"
+                              ? (console.log("first", row),
+                                row?.kelas?.Nama_Angkatan !== undefined
+                                  ? row.kelas.Nama_Angkatan
+                                  : "-")
+                              : row[value] !== undefined
+                              ? row[value]
+                              : "-"}
                           </td>
                         ))}
                       <td className="text-center Fpy-1.5">

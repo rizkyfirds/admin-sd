@@ -90,6 +90,7 @@ function Tambah({
     setShowTambah(false);
     navigate("/data-kelas");
   };
+
   return (
     <div className="w-full h-full">
       <div className="flex">
@@ -125,41 +126,41 @@ function Tambah({
               {guru}
             </div>
           </div>
-          <div className="grid grid-flow-col justify-stretch">
-            <InputField
-              Value={"Grade"}
-              Placeholder={"pilih grade"}
-              changeHandler={(e) => setGrade(e.target.value)}
-              dropdown={true}
-              ManyValue={["1", "2", "3", "4", "5", "6"]}
-            />
-            <div className="ml-3">
-              <SearchField
-                Value={"Kelas"}
-                Placeholder={"pilih kelas"}
-                changeHandler={(e) => setKelas(e)}
-                datas={dataKelas}
+          <div className="flex w-full">
+            <div className="w-1/2">
+              <InputField
+               Value={"Grade"}
+               Placeholder={"pilih grade"}
+               changeHandler={(e) => setGrade(e.target.value)}
+               dropdown={true}
+               ManyValue={["1", "2", "3", "4", "5", "6"]}
+              />
+            </div>
+            <div className="w-1/2 ml-3">
+              <InputField
+               Value={"Kelas"}
+               Placeholder={"masukkan kelas"}
+               changeHandler={(e) => setKelas(e.target.value)}
               />
             </div>
           </div>
-          <div className="grid grid-flow-col justify-stretch">
-          <InputField
-            Value={"Nama Angkatan"}
-            Placeholder={"pilih nama angkatan"}
-            changeHandler={(e) => setNamaAngkatan(e.target.value)}
-            dropdown={true}
-            ManyValue={["belum tau", "belum tau"]}
-            />
-            <div className="ml-3">
-            <InputField
-                Value={"Tahun Masuk"}
-                Placeholder={"isi tahun masuk"}
-                changeHandler={(e) => setTahunMasuk(e.target.value)}
-                tanggal={true}
+          <div className="flex w-full">
+            <div className="w-1/2">
+              <InputField
+              Value={"Nama Angkatan"}
+              Placeholder={"isi nama angkatan"}
+              changeHandler={(e) => setNamaAngkatan(e.target.value)}
               />
             </div>
-
+            <div className="w-1/2 ml-3">
+              <InputField
+               Value={"Tahun Masuk"}
+               Placeholder={"isi tahun masuk"}
+               changeHandler={(e) => setTahunMasuk(e.target.value)}
+               tanggal={true}
+              />
             </div>
+          </div>
         </div>
         <div className="mx-8">
           <div className="mt-10 font-bold text-lg">List Siswa yang Dipilih</div>
